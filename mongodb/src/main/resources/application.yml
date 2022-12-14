@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+
+#      uri: mongodb://用户名:密码@服务器IP:端口/数据库名
+      uri: mongodb://admin:123456@10.0.0.168:27017/admin
+
