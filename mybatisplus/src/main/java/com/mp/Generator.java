@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.fill.Column;
-import com.sun.istack.internal.NotNull;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.util.*;
 
