@@ -17,4 +17,6 @@ import java.util.List;
 public interface StudentDao extends MongoRepository<Student,Long> {
 
     List<Student> getByUsername(String username);
+
+    Student getById(Long id);
 }
