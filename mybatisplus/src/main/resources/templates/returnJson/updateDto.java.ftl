@@ -1,12 +1,20 @@
-package ${package.Entity}.vo;
+package ${package.Entity}.dto;
 
 <#list table.importPackages as pkg>
+    <#if pkg != "com.baomidou.mybatisplus.annotation.FieldFill" &&
+    pkg != "com.baomidou.mybatisplus.annotation.TableField" &&
+    pkg != "com.baomidou.mybatisplus.annotation.TableLogic" &&
+    pkg != "com.baomidou.mybatisplus.annotation.TableName" &&
+    pkg != "com.baomidou.mybatisplus.extension.activerecord.Model">
 import ${pkg};
+    </#if>
 </#list>
 <#if swagger>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 </#if>
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 <#if entityLombokModel>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * <p>
- * ${table.comment!}Vo类
+ * ${table.comment!}Dto类
  * </p>
  *
  * @author ${author}
@@ -32,28 +40,40 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Accessors(chain = true)
 </#if>
 <#if swagger>
-@ApiModel(value="${entity}Vo对象", description="${table.comment!}Vo")
+@ApiModel(value="${entityUpdateDto}对象", description="${table.comment!}更新Dto")
 </#if>
-public class ${entity}Vo implements Serializable {
+public class ${entityUpdateDto} implements Serializable {
 
 <#if entitySerialVersionUID>
     private static final long serialVersionUID = 1L;
 </#if>
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
+    <#if field.name != "deleted" && field.name != "create_time" && field.name != "update_time" &&
+    field.name != "create_by" && field.name != "update_by" && field.name != "update_user" && field.name != "create_user" &&  field.name != "modify_user" && field.name != "modify_time">
     <#if field.keyFlag>
         <#assign keyPropertyName="${field.propertyName}"/>
     </#if>
 
-    <#if field.comment!?length gt 0>
-        <#if swagger>
+        <#if field.comment!?length gt 0>
+            <#if swagger>
+                <#if !field.metaInfo.nullable>
+                    <#if field.metaInfo.jdbcType='VARCHAR' || field.metaInfo.jdbcType='CHAR'>
+    @NotBlank(message = "${field.comment}不能为空")
+    @ApiModelProperty(value = "${field.comment}", required = true)
+                    <#else>
+    @NotNull(message = "${field.comment}不能为空")
+    @ApiModelProperty(value = "${field.comment}", required = true)
+                    </#if>
+                <#else>
     @ApiModelProperty(value = "${field.comment}")
-        <#else>
-    /**
-     * ${field.comment}
-     */
+                </#if>
+            <#else>
+            /**
+            * ${field.comment}
+            */
+            </#if>
         </#if>
-    </#if>
     <#if field.keyFlag>
         <#-- 普通字段 -->
     <#elseif field.fill??>
@@ -81,5 +101,6 @@ public class ${entity}Vo implements Serializable {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     </#if>
     private <#if (logicDeleteFieldName!"") == field.name >Integer<#elseif field.metaInfo.jdbcType='TINYINT'>Integer<#else>${field.propertyType}</#if> ${field.propertyName};
+   </#if>
 </#list>
 }

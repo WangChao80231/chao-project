@@ -6,7 +6,6 @@ import ${package.Entity}.dto.${entityUpdateDto};
 import ${package.Entity}.dto.${entityQryDto};
 import ${package.Entity}.vo.${entityVo};
 import ${superServiceClassPackage};
-import com.maqh.demo.common.JsonBean;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
@@ -43,7 +42,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      *
      * @param ${entitySaveDto?uncap_first} ${table.comment!}保存Dto
      */
-    void add(${entitySaveDto} ${entitySaveDto?uncap_first});
+    Long add(${entitySaveDto} ${entitySaveDto?uncap_first});
 
     /**
     * 修改${table.comment!}

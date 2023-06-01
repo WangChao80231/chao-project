@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.List;
-import com.maqh.demo.util.BeanConvertUtils;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 
 /**
@@ -33,7 +32,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @SuppressWarnings("all")
     @Override
-    public IPage<${entityVo}> listPage( ${entityQryDto} ${entityQryDto?uncap_first}){
+    public IPage<${entityVo}> listPage(${entityQryDto} ${entityQryDto?uncap_first}){
         IPage page = this.lambdaQuery().page(new Page<>(1, 10));
         List<${entityVo}> list =  BeanConvertUtils.convertListTo(page.getRecords(),${entityVo}::new);
         page.setRecords(list);
@@ -48,9 +47,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
-    public void add(${entitySaveDto} ${entitySaveDto?uncap_first}){
+    public Long add(${entitySaveDto} ${entitySaveDto?uncap_first}){
         ${entity} ${entity?uncap_first} =  BeanConvertUtils.convertTo(${entitySaveDto?uncap_first},${entity}::new);
         this.save(${entity?uncap_first});
+        return ${entity?uncap_first}.getId();
     }
 
     @Override

@@ -19,14 +19,19 @@ import java.util.*;
  * @date 2019/9/6 16:41
  */
 public class Generator {
-//    final static String url = "jdbc:mysql://139.196.204.83:3306/phi-training?useUnicode=true&characterEncoding=utf8";
-    final static String url = "jdbc:mysql://192.168.1.252/phi-training-copy?useUnicode=true&characterEncoding=utf8";
-    final static String userName = "root";
-//    final static String password = "Giga@163.com";
-    final static String password = "PhiMysql!1234";
-    final static String projectPath = "/Users/wangchao/my-project/chao-project/mybatisplus";
-//    final static String projectPath = "/Users/wangchao/zq-project/phi-training";
-    final static String parentPackage = "com.zigin.net.phi.training";
+//    final static String url = "jdbc:mysql://192.168.1.252:3306/epi-smart-dev?useUnicode=true&characterEncoding=utf8";
+//    final static String userName = "root";
+//    final static String password = "PhiMysql!1234";
+//
+//    final static String projectPath = "/Users/wangchao/workspace/my/chao-project/mybatisplus/";
+//    final static String parentPackage = "com.zigin.net.phi.smart.net";
+
+    final static String url = "jdbc:mysql://10.0.0.168:3306/huijie?useUnicode=true&characterEncoding=utf8";
+        final static String userName = "root";
+    final static String password = "root";
+
+    final static String projectPath = "/Users/wangchao/workspace/my/chao-project/mybatisplus/";
+    final static String parentPackage = "com.zigin.net.phi.smart.net";
     final static String moduleName = "";
 
     public static void main(String[] args) {
@@ -59,7 +64,8 @@ public class Generator {
                             .formatFileName("%s")
 //                            .enableTableFieldAnnotation()
                             .enableActiveRecord()
-                            .addTableFills(new Column("create_by", FieldFill.INSERT),new Column("update_by", FieldFill.UPDATE))
+//                            .addTableFills(new Column("create_by", FieldFill.INSERT),new Column("update_by", FieldFill.UPDATE))
+                            .addTableFills(new Column("create_user", FieldFill.INSERT),new Column("modify_user", FieldFill.UPDATE))
 
                             .controllerBuilder()
                             .enableRestStyle()
@@ -77,17 +83,17 @@ public class Generator {
                   .injectionConfig(builder->{
                         List<CustomFile> list = new ArrayList<>();
                         CustomFile qryDto = new CustomFile.Builder()
-                                .templatePath("templates/returnJson/dto/qryDto.java.ftl")
+                                .templatePath("templates/returnJson/qryDto.java.ftl")
                                 .packageName("/entity/dto")
                                 .fileName("QryDto.java")
                                 .build();
                       CustomFile saveDto = new CustomFile.Builder()
-                              .templatePath("templates/returnJson/dto/saveDto.java.ftl")
+                              .templatePath("templates/returnJson/saveDto.java.ftl")
                               .packageName("/entity/dto")
                               .fileName("SaveDto.java")
                               .build();
                       CustomFile updateDto = new CustomFile.Builder()
-                              .templatePath("/templates/returnJson/dto/updateDto.java.ftl")
+                              .templatePath("/templates/returnJson/updateDto.java.ftl")
                               .packageName("/entity/dto")
                               .fileName("UpdateDto.java")
                               .build();
@@ -116,8 +122,8 @@ public class Generator {
                     builder.controller("templates/returnJson/controller.java")
                             .service("templates/returnJson/service.java")
                             .serviceImpl("templates/returnJson/serviceImpl.java")
-//                            .mapper("templates/returnJson/mapper.java")
-//                            .xml("templates/returnJson/mapper.xml")
+                            .mapper("templates/returnJson/mapper.java")
+                            .xml("templates/returnJson/mapper.xml")
                             .entity("templates/returnJson/entity.java");
 
 
